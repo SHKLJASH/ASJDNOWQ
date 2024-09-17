@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 정보 등록</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="container">
@@ -127,7 +128,7 @@
             } else {
                 // 데이터를 JSON 형식으로 변환
                 const data = JSON.stringify({ userId, joinDate, joinMethod, subjects, explore1, explore2 });
-                console.log(data);  // 콘솔에 출력 (실제 상황에서는 서버로 전송)
+                Telegram.WebApp.sendData(data);  // 봇에 데이터를 직접 전송
 
                 alert("회원 정보가 등록되었습니다.");
             }
