@@ -1,43 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Mini App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>회원 정보 등록</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>회원가입</h2>
-    <form id="signupForm">
-        <label for="name">이름:</label><br>
-        <input type="text" id="name" name="name"><br><br>
+    <div class="container">
+        <h2>회원 정보 등록</h2>
+        <form id="signupForm">
+            <div class="form-group">
+                <label for="userId">아이디 (숫자만)</label>
+                <input type="text" id="userId" name="userId" pattern="[0-9]+" required>
+            </div>
 
-        <label for="email">이메일:</label><br>
-        <input type="email" id="email" name="email"><br><br>
+            <div class="form-group">
+                <label for="joinDate">가입일</label>
+                <input type="date" id="joinDate" name="joinDate" required>
+            </div>
 
-        <label for="phone">전화번호:</label><br>
-        <input type="tel" id="phone" name="phone"><br><br>
+            <div class="form-group">
+                <label for="joinMethod">가입 방법</label>
+                <select id="joinMethod" name="joinMethod" required>
+                    <option value="" disabled selected>선택해 주세요</option>
+                    <option value="scan">스캔</option>
+                    <option value="nonscan">비스캔</option>
+                </select>
+            </div>
 
-        <button type="button" onclick="submitForm()">제출</button>
-    </form>
+            <div class="form-group">
+                <label for="korean">국어</label>
+                <input type="checkbox" id="korean" name="subjects" value="Korean">
+            </div>
+
+            <div class="form-group">
+                <label for="math">수학</label>
+                <input type="checkbox" id="math" name="subjects" value="Math">
+            </div>
+
+            <div class="form-group">
+                <label for="english">영어</label>
+                <input type="checkbox" id="english" name="subjects" value="English">
+            </div>
+
+            <div class="form-group">
+                <label for="explore1">탐구1 선택</label>
+                <select id="explore1" name="explore1">
+                    <option value="" disabled selected>선택해 주세요</option>
+                    <optgroup label="사회탐구">
+                        <option value="LifeAndEthics">생활과 윤리</option>
+                        <option value="EthicsAndPhilosophy">윤리와 사상</option>
+                        <option value="KoreanGeography">한국지리</option>
+                        <option value="WorldGeography">세계지리</option>
+                        <option value="EastAsianHistory">동아시아사</option>
+                        <option value="WorldHistory">세계사</option>
+                        <option value="Economics">경제</option>
+                        <option value="PoliticsAndLaw">정치와 법</option>
+                        <option value="SocialCulture">사회문화</option>
+                    </optgroup>
+                    <optgroup label="과학탐구">
+                        <option value="Physics1">물리학1</option>
+                        <option value="Chemistry1">화학1</option>
+                        <option value="LifeScience1">생명과학1</option>
+                        <option value="EarthScience1">지구과학1</option>
+                        <option value="Physics2">물리학2</option>
+                        <option value="Chemistry2">화학2</option>
+                        <option value="LifeScience2">생명과학2</option>
+                        <option value="EarthScience2">지구과학2</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="explore2">탐구2 선택</label>
+                <select id="explore2" name="explore2">
+                    <option value="" disabled selected>선택해 주세요</option>
+                    <optgroup label="사회탐구">
+                        <option value="LifeAndEthics">생활과 윤리</option>
+                        <option value="EthicsAndPhilosophy">윤리와 사상</option>
+                        <option value="KoreanGeography">한국지리</option>
+                        <option value="WorldGeography">세계지리</option>
+                        <option value="EastAsianHistory">동아시아사</option>
+                        <option value="WorldHistory">세계사</option>
+                        <option value="Economics">경제</option>
+                        <option value="PoliticsAndLaw">정치와 법</option>
+                        <option value="SocialCulture">사회문화</option>
+                    </optgroup>
+                    <optgroup label="과학탐구">
+                        <option value="Physics1">물리학1</option>
+                        <option value="Chemistry1">화학1</option>
+                        <option value="LifeScience1">생명과학1</option>
+                        <option value="EarthScience1">지구과학1</option>
+                        <option value="Physics2">물리학2</option>
+                        <option value="Chemistry2">화학2</option>
+                        <option value="LifeScience2">생명과학2</option>
+                        <option value="EarthScience2">지구과학2</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <button type="submit">등록</button>
+        </form>
+    </div>
 
     <script>
-        Telegram.WebApp.ready();
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            const userId = document.getElementById("userId").value;
+            const joinDate = document.getElementById("joinDate").value;
+            const joinMethod = document.getElementById("joinMethod").value;
 
-        function submitForm() {
-            const name = document.getElementById("name").value;
-            const email = document.getElementById("email").value;
-            const phone = document.getElementById("phone").value;
+            // 체크된 과목 가져오기
+            const subjects = [];
+            document.querySelectorAll('input[name="subjects"]:checked').forEach((checkbox) => {
+                subjects.push(checkbox.value);
+            });
 
-            if (!name || !email || !phone) {
-                alert("모든 정보를 기입해 주세요.");
-                return;
+            // 탐구 과목 선택 가져오기
+            const explore1 = document.getElementById("explore1").value;
+            const explore2 = document.getElementById("explore2").value;
+
+            // 유효성 검사: 필수 입력 필드만 확인
+            if (!userId || !joinDate || !joinMethod) {
+                alert("아이디, 가입일, 가입 방법은 필수입니다.");
+                event.preventDefault(); // 폼 제출을 방지
+            } else {
+                // 데이터를 JSON 형식으로 변환
+                const data = JSON.stringify({ userId, joinDate, joinMethod, subjects, explore1, explore2 });
+                console.log(data);  // 콘솔에 출력 (실제 상황에서는 서버로 전송)
+
+                alert("회원 정보가 등록되었습니다.");
             }
-
-            // 데이터를 텔레그램 봇으로 전송
-            const data = JSON.stringify({ name, email, phone });
-            Telegram.WebApp.sendData(data);  // 봇에 데이터를 직접 전송
-        }
+        });
     </script>
 </body>
 </html>
